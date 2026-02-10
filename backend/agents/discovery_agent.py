@@ -20,8 +20,16 @@ class DiscoveryAgent:
         if not self.youtube:
             return None
 
-        # Enhance query with focus and module goal
-        query = f"{step['focus']} {step['step_title']} tutorial"
+        # Enhance query based on level
+        base_query = f"{step['focus']} {step['step_title']}"
+        level = step.get('level', 'Low')
+        
+        if level == 'High':
+            query = f"{base_query} deep dive conference"
+        elif level == 'Medium':
+            query = f"{base_query} advanced tutorial"
+        else:
+            query = f"{base_query} beginner tutorial course"
         try:
             search_response = self.youtube.search().list(
                 q=query,
