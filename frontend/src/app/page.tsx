@@ -106,8 +106,10 @@ export default function Home() {
           </aside>
 
           {/* Main Feed */}
-          <main style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-            <div className="video-container">
+          <main style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div className="video-frame">
+              <div className="corner-decor top-left"></div>
+              <div className="corner-decor bottom-right"></div>
               <iframe
                 width="100%"
                 height="100%"
@@ -119,86 +121,63 @@ export default function Home() {
             </div>
 
             <div className="content-engine">
-              <h1 style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)", fontWeight: 800, lineHeight: 1.2, marginBottom: "0.25rem" }}>
+              <h1 style={{ fontSize: "1.25rem", fontWeight: 700, lineHeight: 1.3, marginBottom: "0.5rem" }}>
                 {current.title}
               </h1>
-              <p style={{ color: "var(--accent-primary)", fontWeight: 600, fontSize: "0.9rem", marginBottom: "1.5rem" }}>{current.channel}</p>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}>
-                <div className="panel">
-                  <h4 className="pill-meta">Summary</h4>
-                  <p style={{ fontSize: "1rem", lineHeight: 1.5, color: "var(--text-primary)", opacity: 0.9 }}>{current.summary}</p>
-                </div>
-
-                <div className="panel" style={{ borderLeft: "3px solid var(--accent-secondary)" }}>
-                  <h4 className="pill-meta" style={{ color: "var(--accent-secondary)" }}>Core Concept</h4>
-                  <p style={{ fontSize: "0.95rem", fontWeight: 500 }}>{current.mental_model}</p>
-                </div>
+              <div className="glass-card">
+                <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.5 }}>
+                  <span style={{ color: "var(--accent-primary)", fontWeight: 700 }}>Brief: </span>
+                  {current.summary}
+                </p>
               </div>
             </div>
           </main>
 
           {/* Side Panels */}
           <aside style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <div className="panel">
-              <h3 className="pill-meta" style={{ color: "var(--accent-success)", marginBottom: "1rem" }}>Prerequisites</h3>
-              {current.checklist.map((item, i) => (
-                <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem", fontSize: "0.85rem", color: "var(--text-primary)" }}>
-                  <span style={{ color: "var(--accent-success)" }}>✓</span>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="panel" style={{ background: "rgba(255, 255, 255, 0.03)" }}>
-              <h3 className="pill-meta" style={{ color: "var(--accent-gold)", marginBottom: "1rem" }}>Quiz</h3>
+            <div className="panel quiz-container">
+              <h3 className="section-header">Knowledge Check</h3>
               {current.questions && current.questions.length > 0 ? (
                 <>
-                  <p style={{ fontSize: "0.9rem", fontWeight: 600, marginBottom: "1rem", lineHeight: 1.4 }}>{current.questions[0].question}</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <p className="quiz-q">{current.questions[0].question}</p>
+                  <div className="quiz-grid">
                     {current.questions[0].options.map((opt, j) => {
                       const correctIdx = current.questions[0]?.correct_index;
+                      const isSelected = selectedOpt === j;
+                      const statusClass = isSelected
+                        ? (isCorrect ? 'correct' : 'error')
+                        : (isCorrect === false && j === correctIdx ? 'correct' : '');
+
                       return (
                         <button
                           key={j}
-                          className={`mcq-button ${selectedOpt === j ? (isCorrect ? 'correct' : 'error') : ''} ${isCorrect === false && j === correctIdx ? 'correct' : ''}`}
+                          className={`quiz-opt ${statusClass}`}
                           onClick={() => handleOptionSelect(j)}
                         >
-                          <span style={{ maxWidth: "85%" }}>{opt}</span>
-                          <span>
-                            {selectedOpt === j ? (isCorrect ? '✓' : '✗') : ''}
-                          </span>
+                          {opt}
                         </button>
                       );
                     })}
                   </div>
-                  {isCorrect !== null && (
-                    <div className="animate" style={{ marginTop: "1rem", textAlign: "center", padding: "0.75rem", borderRadius: "8px", background: isCorrect ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)" }}>
-                      <p style={{ fontWeight: 700, color: isCorrect ? "var(--accent-success)" : "var(--accent-error)", fontSize: "0.8rem" }}>
-                        {isCorrect ? "Correct!" : "Incorrect. Correct answer highlighted."}
-                      </p>
-                    </div>
-                  )}
                 </>
               ) : (
-                <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>Loading quiz...</p>
+                <p style={{ fontSize: "0.8rem", opacity: 0.5 }}>Loading...</p>
               )}
             </div>
 
             {activeStep < path.path.length - 1 && (
               <button
-                className="btn-premium"
-                style={{ width: "100%", padding: "1rem", borderRadius: "12px", fontSize: "1rem" }}
+                className="btn-premium action-btn"
                 onClick={() => { setActiveStep(activeStep + 1); window.scrollTo(0, 0); }}
               >
-                Next Module →
+                Next ❯
               </button>
             )}
 
             {activeStep === path.path.length - 1 && isCorrect === true && (
-              <div className="panel animate" style={{ background: "linear-gradient(135deg, var(--accent-success), #065f46)", color: "white", border: "none", textAlign: "center", padding: "1rem" }}>
-                <h3 style={{ marginBottom: "0.25rem", fontWeight: 800, fontSize: "1rem" }}>Completed</h3>
-                <p style={{ fontSize: "0.8rem", opacity: 0.9 }}>Module mastered.</p>
+              <div className="panel completed-badge">
+                <span>★ Module Completed</span>
               </div>
             )}
           </aside>

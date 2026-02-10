@@ -103,6 +103,131 @@ body::before {
   box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
 }
 
+/* Video Frame */
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: 8px;
+  /* Reduced from lg */
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.corner-decor {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent-primary);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.top-left {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.bottom-right {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Content Cards */
+.glass-card {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Quiz Redesign */
+.quiz-container {
+  padding: 1.25rem;
+}
+
+.section-header {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-gold);
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+.quiz-q {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .quiz-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* 2-col on desktop */
+
+.quiz-opt {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 0.85rem;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quiz-opt:hover {
+  border-color: var(--accent-primary);
+  color: white;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.quiz-opt.correct {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: var(--accent-success);
+  color: var(--accent-success);
+  font-weight: 700;
+}
+
+.quiz-opt.error {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--accent-error);
+  color: var(--accent-error);
+}
+
+.completed-badge {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 1rem;
+  border: none;
+}
+
+.action-btn {
+  width: 100%;
+  border-radius: 10px;
+}
+
 /* Master Layout */
 .master-grid {
   display: grid;
