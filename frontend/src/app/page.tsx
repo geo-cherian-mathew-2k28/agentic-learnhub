@@ -35,6 +35,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -202,13 +203,49 @@ export default function Home() {
             onChange={(e) => setTopic(e.target.value)}
             required
           />
-          <select value={level} onChange={(e) => setLevel(e.target.value)}>
-            <option value="Low">Beginner</option>
-            <option value="Medium">Intermediate</option>
-            <option value="High">Expert</option>
-          </select>
+
+          <div className="custom-select" style={{ position: "relative" }}>
+            <button
+              type="button"
+              className="select-trigger"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              {level === "Low" ? "Beginner" : level === "Medium" ? "Intermediate" : "Expert"}
+              <span className={`arrow ${isDropdownOpen ? 'open' : ''}`}>▼</span>
+            </button>
+
+            {isDropdownOpen && (
+              <div className="select-options">
+                {[
+                  { val: "Low", label: "Beginner" },
+                  { val: "Medium", label: "Intermediate" },
+                  { val: "High", label: "Expert" }
+                ].map((opt) => (
+                  <div
+                    key={opt.val}
+                    className={`select-option ${level === opt.val ? "selected" : ""}`}
+                    onClick={() => { setLevel(opt.val); setIsDropdownOpen(false); }}
+                  >
+                    {opt.label}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <button type="submit" className="btn-premium">Start</button>
         </form>
+
+        <div className="trending-section animate" style={{ animationDelay: "0.1s" }}>
+          <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "0.75rem", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>Popular Learning Paths</p>
+          <div className="trending-tags">
+            {["System Design", "React Advanced", "Python AI", "Docker", "Next.js 14", "Kubernetes"].map((tag) => (
+              <span key={tag} onClick={() => setTopic(tag)} className="trend-tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
