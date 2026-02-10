@@ -121,12 +121,12 @@ export default function Home() {
             </div>
 
             <div className="content-engine">
-              <h1 style={{ fontSize: "1.25rem", fontWeight: 700, lineHeight: 1.3, marginBottom: "0.5rem" }}>
+              <h1 className="content-title">
                 {current.title}
               </h1>
 
               <div className="glass-card">
-                <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.5 }}>
+                <p className="content-summary">
                   <span style={{ color: "var(--accent-primary)", fontWeight: 700 }}>Brief: </span>
                   {current.summary}
                 </p>

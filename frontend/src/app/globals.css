@@ -347,6 +347,56 @@ body::before {
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Main Feed Typography & Layout */
+.content-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.content-summary {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Desktop Optimization */
+@media (min-width: 1024px) {
+  .content-title {
+    font-size: 2rem;
+    /* Significantly larger on desktop */
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .content-summary {
+    font-size: 1.1rem;
+    /* Readable prose on desktop */
+    line-height: 1.7;
+  }
+
+  .quiz-q {
+    font-size: 1.1rem;
+    /* Larger quiz text */
+  }
+}
+
+/* Video Frame Desktop Enhancements */
+@media (min-width: 1024px) {
+  .video-frame {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    /* Deeper shadow on desktop */
+  }
+
+  .corner-decor {
+    width: 30px;
+    height: 30px;
+    border-width: 3px;
+    /* Bold corners */
+  }
+}
+
 .spinner {
   width: 48px;
   height: 48px;
